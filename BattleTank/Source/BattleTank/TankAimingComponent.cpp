@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrle.h"
+#include "TankTurret.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -63,12 +64,20 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrleTowards(AimDirection);
+		MoveTurretTowards(AimDirection);
 	}
 }
 
 void UTankAimingComponent::SetBarrleReference(UTankBarrle * BarrleToSet)
 {
+	if (!BarrleToSet) { return; }
 	Barrle = BarrleToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	if (!TurretToSet) { return; }
+	Turret = TurretToSet;
 }
 
 void UTankAimingComponent::MoveBarrleTowards(FVector AimDirection)
@@ -78,5 +87,15 @@ void UTankAimingComponent::MoveBarrleTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - BarrleRotator;
 
 	Barrle->Elevate(DeltaRotator.Pitch);
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+{
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - TurretRotator;
+
+	Turret->Roll(DeltaRotator.Yaw);
+
 }
 
