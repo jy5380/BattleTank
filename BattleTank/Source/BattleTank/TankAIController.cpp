@@ -16,10 +16,10 @@ void ATankAIController::BeginPlay()
 	Super::BeginPlay();
 
 	auto ControlledTank = GetPlayerTank();
-	if (ControlledTank)
+	/*if (ControlledTank)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Plyaer tank %s"), *(ControlledTank->GetName()));
-	}
+	}*/
 }
 
 ATank * ATankAIController::GetPlayerTank() const
@@ -35,6 +35,8 @@ void ATankAIController::Tick(float DeltaTime)
 	if (GetPlayerTank())
 	{
 		GetControlledTank()->AimAt(GetPlayerTank()->GetTargetLocation());
+
+		GetControlledTank()->Fire();
 	}
 	
 }

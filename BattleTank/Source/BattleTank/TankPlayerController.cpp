@@ -15,10 +15,10 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	auto ControlledTank = GetControlledTank();
-	if (ControlledTank)
+	/*if (ControlledTank)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("PlayerController Possessed tank %s"), *(ControlledTank->GetName()));
-	}
+	}*/
 }
 
 void ATankPlayerController::Tick(float DeltaSeconds)
@@ -53,12 +53,12 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector & HitLocation) const
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
-	UE_LOG(LogTemp, Warning, TEXT("ScreenLocation: %s"), *ScreenLocation.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("ScreenLocation: %s"), *ScreenLocation.ToString());
 
 	FVector LookDirection;
 	if(GetLookDirection(ScreenLocation, LookDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Look direction: %s "), *LookDirection.ToString());
+		//UE_LOG(LogTemp, Warning, TEXT("Look direction: %s "), *LookDirection.ToString());
 
 		GetLookVectorHitLocation(LookDirection, HitLocation);
 	}

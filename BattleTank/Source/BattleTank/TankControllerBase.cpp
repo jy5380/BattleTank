@@ -14,8 +14,8 @@ void ATankControllerBase::BeginPlay()
 	Super::BeginPlay();
 
 	auto ControlledTank = GetControlledTank();
-	if (ControlledTank)
+	/*if (ControlledTank)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Controller Possessed tank %s"), *(ControlledTank->GetName()));
-	}
+	}*/
 }

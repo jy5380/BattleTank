@@ -2,10 +2,32 @@
 
 
 #include "Tank.h"
+#include "TankBarrle.h"
+#include "Projectile.h"
+
+void ATank::Fire()
+{
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (Barrle && isReloaded)
+	{
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrle->GetSocketLocation(FName("Projectile")),
+			Barrle->GetSocketRotation(FName("Projectile"))
+			);
+
+		Projectile->LauchProjectile(LaunchSpeed);
+
+		LastFireTime = FPlatformTime::Seconds();
+	}
+	
+}
 
 void ATank::SetBarrleReference(UTankBarrle * BarrleToSet)
 {
 	TankAimingComponent->SetBarrleReference(BarrleToSet);
+	Barrle = BarrleToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret * TurretToSet)

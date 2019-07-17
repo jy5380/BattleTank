@@ -10,6 +10,7 @@
 
 class UTankBarrle;
 class UTankTurret;
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -18,6 +19,9 @@ class BATTLETANK_API ATank : public APawn
 
 public:
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrleReference(UTankBarrle* BarrleToSet);
@@ -42,5 +46,15 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 100000;
+	float LaunchSpeed = 4000;
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float ReloadTimeInSeconds = 3.f;
+	UPROPERTY(EditAnywhere, Category = Firing)
+		double LastFireTime = 0;
+	UPROPERTY(EditAnywhere, Category = Setup)
+		//UClass* ProjectileBlueprint;
+		TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UTankBarrle* Barrle = nullptr;
+	
 };
